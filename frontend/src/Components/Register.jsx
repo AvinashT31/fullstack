@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState} from 'react'
 import '../Styles/Register.css'
 import axios from 'axios';
-import { useNavigate } from 'react'
+import {useNavigate} from 'react-router-dom'
 
 const Register = () => {
 
@@ -22,6 +22,7 @@ const Register = () => {
             })
             console.log(response, "response");
             if (response.data.status === 200) {
+                route('/login');
                 alert(response.data.message)
             }
             else if (response.data.status === 400) {
@@ -31,8 +32,6 @@ const Register = () => {
         else {
             alert("please fill all field");
         }
-
-
     }
 
     const handleform = (e) => {
@@ -66,7 +65,6 @@ const Register = () => {
                         <br />
                         <input className='btn' type="submit" value="Register" />
                     </form>
-
                 </div>
             </div>
         </>

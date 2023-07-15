@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState} from 'react'
 import '../Styles/Login.css'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
     const [loginData, setloginData] = useState({ email: "", password: "" });
     console.log(loginData, "loginData");
+
+    const route = useNavigate();
 
     const handlelogin = async (e) => {
         e.preventDefault();
@@ -19,6 +22,7 @@ const Login = () => {
             if (response.data.status === 200) {
                 alert(response.data.message)
                 setloginData({ email: "", password: "" });
+                route('/addproduct')
             }
             else if (response.data.status === 400) {
                 alert(response.data.message)
