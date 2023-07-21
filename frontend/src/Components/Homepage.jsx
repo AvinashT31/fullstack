@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import '../Styles/Homepage.css';
 import axios from 'axios';
+import { useContext } from 'react';
+import { AuthContext } from '../Context/User.context';
 
 const Homepage = () => {
 
   const [displayproduct, setdisplayproduct] = useState([]);
   console.log(displayproduct, "displayproduct");
+
+  const[User, setUser] = useState()
+
+  const { state } = useContext(AuthContext);
+  console.log(state.user);
+
+  useEffect(() => {
+    if (state.user) {
+      setUser(state?.user)
+    }
+  }, [state])
 
   useEffect(() => {
     async function displayData() {
@@ -31,6 +44,9 @@ const Homepage = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div>
+        <p>{User?.name}</p>
       </div>
     </>
   )

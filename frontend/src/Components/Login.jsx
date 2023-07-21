@@ -2,6 +2,8 @@ import React, { useState} from 'react'
 import '../Styles/Login.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../Context/User.context';
 
 const Login = () => {
 
@@ -9,6 +11,9 @@ const Login = () => {
     console.log(loginData, "loginData");
 
     const route = useNavigate();
+
+    const {state, login, logout} = useContext(AuthContext);
+    console.log(state, "state in login");
 
     const handlelogin = async (e) => {
         e.preventDefault();
@@ -20,9 +25,13 @@ const Login = () => {
             })
             // console.log(response.data, "response")
             if (response.data.status === 200) {
+                console.log(response.data.data);
+
+                localStorage.setItem("access-token", JSON.stringify(response.data.data))
+                login({ token: response.data.data, payload: response.data.user })
                 alert(response.data.message)
                 setloginData({ email: "", password: "" });
-                route('/addproduct')
+                // route('/addproduct')
             }
             else if (response.data.status === 400) {
                 alert(response.data.message)
