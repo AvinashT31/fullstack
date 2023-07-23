@@ -1,5 +1,6 @@
 import User from "../Modals/User.js";
-import jwt from 'jsonwebtoken'; 
+import jwt from 'jsonwebtoken';
+import Product from '../Modals/Products.js';
 
 export const register = async (req, res) => {
     try {
@@ -39,12 +40,12 @@ export const login = async (req, res) => {
         const user = await User.findOne({ email, password }).select("-password")
         console.log(user, "before token")
 
-        const payload = { id: user._id, email: user.email, role: user.role }
+        const payload = { id: user._id, email: user.email, role: user.role, name: user.name }
         const token = jwt.sign(payload, process.env.JWT_SECRET)
-        console.log(token, "token");
+        console.log(payload, token, "token");
 
         if (user) {
-            return res.json({ status: 200, message: " login successfully", data: token })
+            return res.json({ status: 200, message: " login successfully", data: token, user: payload })
         }
         else {
             return res.json({ status: 400, message: "Credentials do not match." })
@@ -66,12 +67,27 @@ export const getCurrentUser = async (req, res) => {
 
         const userId = decodedToken.id;
 
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).select("-password");
 
         if (user) {
             res.status(200).json({ data: user, status: "Sucess" })
         }
 
+    } catch (error) {
+        return res.send(error)
+    }
+}
+
+
+export const getallpraticularsellerproduct = async (req, res) => {
+    try {
+        const { userId } = req.body;
+
+        if (!userId) return res.send("userId is required");
+
+        const allproduct = await Product.find({ userId });
+        return res.send(allproduct);
+        
     } catch (error) {
         return res.send(error)
     }

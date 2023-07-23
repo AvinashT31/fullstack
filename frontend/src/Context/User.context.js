@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 const initialState = { user: null };
 
-// console.log(initialState, "initialState here")
+console.log(initialState, "initialState here")
 
 function reducer(state, action) {
     // console.log(action, "after refresh")
@@ -29,6 +29,7 @@ const AuthProvider = ({ children }) => {
         })
     }
     const logout = () => {
+        localStorage.removeItem("accessToken");
         dispatch({
             type: "logout"
         })
@@ -52,9 +53,6 @@ const AuthProvider = ({ children }) => {
             }
         }
         checkUser();
-
-
-
     }, [])
 
     return (

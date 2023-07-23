@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import '../Styles/Login.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ const Login = () => {
 
     const route = useNavigate();
 
-    const {state, login, logout} = useContext(AuthContext);
+    const { state, login, logout } = useContext(AuthContext);
     console.log(state, "state in login");
 
     const handlelogin = async (e) => {
@@ -26,12 +26,10 @@ const Login = () => {
             // console.log(response.data, "response")
             if (response.data.status === 200) {
                 console.log(response.data.data);
-
-                localStorage.setItem("access-token", JSON.stringify(response.data.data))
                 login({ token: response.data.data, payload: response.data.user })
+                route('/')
                 alert(response.data.message)
                 setloginData({ email: "", password: "" });
-                // route('/addproduct')
             }
             else if (response.data.status === 400) {
                 alert(response.data.message)
@@ -53,7 +51,7 @@ const Login = () => {
             <div className='login-fullpage'>
                 <div className='loginpage'>
                     <h1 className='loginheading'>Login</h1>
-                    <form onClick={(e) => handlelogin(e)}>
+                    <form onSubmit={handlelogin}>
                         <label>Enter Your Email</label>
                         <br />
                         <input onChange={(e) => handleloginform(e)} name='email' value={loginData.email} type="email" />
@@ -64,6 +62,8 @@ const Login = () => {
                         <br />
                         <input className='btn' type="submit" value="Login" />
                     </form>
+                    <br />
+                    <input onClick={() => route('/register')} className='btn' type="submit" value="Register" />
 
                 </div>
             </div>

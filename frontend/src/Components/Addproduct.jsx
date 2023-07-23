@@ -1,9 +1,34 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios';
 import '../Styles/Addproduct.css';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Context/User.context';
 
 const Addproduct = () => {
+
+  const { state } = useContext(AuthContext);
+  // console.log(state.user, "state");
+
+  const [user, setuser] = useState("");
+  console.log(user, "user")
+
+  useEffect(() => {
+    if (state.user) {
+      setuser(state?.user)
+    }
+    else {
+      setuser("");
+    }
+  }, [state])
+
+  useEffect(() => {
+    if(state?.user){
+      if(state?.user?.role != "Seller"){
+        alert("you are not a seller");
+        route("/");
+      }
+    }
+  }, [state])
 
   const [addproduct, setaddproduct] = useState({ name: "", image: "", price: "" });
   console.log(addproduct, "addproduct");
@@ -23,17 +48,18 @@ const Addproduct = () => {
       const response = await axios.post("http://localhost:8000/addproduct", {
         name: addproduct.name,
         image: addproduct.image,
-        price: addproduct.price
+        price: addproduct.price,
+        userId: user._id
       })
       if (response.data.status === 200) {
-        route("/");
+        route("/showproduct");
         alert(response.data.message);
       }
     } else {
       alert("please fill all fields")
     }
-
   }
+
   return (
     <div>
       <div className='addproduct-fullpage'>

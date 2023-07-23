@@ -34,7 +34,7 @@ const Register = () => {
             }
         }
         else {
-            // alert("please fill all field");
+            alert("please fill all field");
         }
     }
 
@@ -55,7 +55,7 @@ const Register = () => {
             <div className='reigster-fullpage'>
                 <div className='registerpage'>
                     <h1 className='registerheading'>Register</h1>
-                    <form onClick={(e) => handlesubmit(e)}>
+                    <form onSubmit={(e) => handlesubmit(e)}>
                         <label>Enter Your Name</label>
                         <br />
                         <input onChange={(e) => handleform(e)} name='name' value={userRegister.name} type="text" />
