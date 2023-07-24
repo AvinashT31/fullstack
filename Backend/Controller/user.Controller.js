@@ -67,7 +67,7 @@ export const getCurrentUser = async (req, res) => {
 
         const userId = decodedToken.id;
 
-        const user = await User.findById(userId).select("-password");
+        const user = await User.findById(userId);
 
         if (user) {
             res.status(200).json({ data: user, status: "Sucess" })
@@ -87,8 +87,49 @@ export const getallpraticularsellerproduct = async (req, res) => {
 
         const allproduct = await Product.find({ userId });
         return res.send(allproduct);
-        
+
     } catch (error) {
         return res.send(error)
     }
 }
+
+
+export const getcurrentuserwithpass = async (req, res) => {
+    try {
+        const { userId } = req.body
+        // console.log(userId, "userID");
+
+        if (!userId) return res.send("userId is required");
+
+        const user = await User.findById(userId);
+
+        if (user) {
+            res.status(200).json({ data: user, status: "success" })
+        }
+    } catch (error) {
+        return res.send(error)
+    }
+
+}
+
+export const updateprofile = async (req, res) => {
+    try {
+        const { name, email, number, password, _id } = req.body;
+
+        if(!userId) return res.send("id is required"); 
+        if (!name) return res.send("name is required");
+        if (!email) return res.send("email is required");
+        if (!number) return res.send("number is required");
+        if (!password) return res.send("password is required");
+
+        const result = await User.findByIdAndUpdate(_id, {
+            name, email, number, password
+        }, { returnDocument: 'after' })
+        res.send(result);
+    }
+    catch (error) {
+        return res.send(error)
+    }
+
+
+} 

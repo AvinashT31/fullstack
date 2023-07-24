@@ -50,9 +50,9 @@ const Navbar = () => {
                         <li><a>Carts</a></li>
                     </div>}
 
-                    {user?.name ? <div>
-                        <li><a>{user.name}</a></li>
-                        <li onClick={logout}><a href="#">Logout</a></li>
+                    {user?.name ? <div style={{display:"flex", justifyContent:"space-between"}}>
+                        <li onClick={() => route('/profile')}><a>{user.name}</a></li>
+                        <li onClick={logout}><a>Logout</a></li>
                     </div> : <div>
                         <li onClick={() => route('/login')}><a>Login</a></li>
                     </div>}
