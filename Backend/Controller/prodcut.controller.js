@@ -28,3 +28,29 @@ export const showproduct = async (req, res) => {
         return res.send(error)
     }
 }
+
+export const updateproduct = async (req, res) => {
+    try {
+        const { id, name, image, price, userId } = req.body
+
+        if (!id) return res.send("id is required");
+        if (!name) return res.send("name is required");
+        if (!image) return res.send("image is required");
+        if (!price) return res.send("price is required");
+        if (!userId) return res.send("userId is required");
+
+        const product = await Product.findById(id)
+        if (product.userId == userId) {
+            product.name = name,
+            product.price = price,
+            product.image = image,
+            await product.save();
+            return res.status(201).json({status:"success", data : "product", message:"product added successfully"})
+        } else {
+            alert("you cant update this product")
+        }
+    } catch (error) {
+        return res.send(error)
+    }
+}
+

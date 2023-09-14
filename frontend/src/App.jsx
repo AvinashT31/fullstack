@@ -9,6 +9,7 @@ import Login from './Components/Login';
 import Navbar from './Global/Navbar';
 import Producthandler from './Components/Producthandler';
 import Profile from './Components/Profile';
+import Updateproduct from './Components/Updateproduct';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route exact path='/addproduct' element={<Addproduct />} />
         <Route exact path ='/showproduct' element={<Showproduct/>} />
         <Route exact path='/producthandler' element={<Producthandler/>} />
+        <Route exact path='/updateproduct/:id' element={<Updateproduct/>} />
         <Route exact path='/profile' element={<Profile/>} />
       </Routes>
     </div>

@@ -3,8 +3,8 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import { getCurrentUser, getallpraticularsellerproduct, getcurrentuserwithpass, login, register, updateprofile } from './Controller/user.Controller.js';
-import { addproduct, showproduct } from './Controller/prodcut.controller.js';
+import { getCurrentUser, getallpraticularsellerproduct, getcurrentuserwithpass, login, register, updateprofile, updatesingleproduct } from './Controller/user.Controller.js';
+import { addproduct, showproduct, updateproduct } from './Controller/prodcut.controller.js';
 
 const app = express();
 
@@ -40,7 +40,11 @@ app.post("/updated-profile", updateprofile)
 //getallparticularselletproduct
 app.post("/get-all-particular-seller-product", getallpraticularsellerproduct)
 
+//updateproductdetails
+app.post("/update-single-sell-product", updatesingleproduct);
 
+// update-product
+app.post("/update-product", updateproduct)
 
 
 mongoose.connect(process.env.MONGODB_URL).then(() => {

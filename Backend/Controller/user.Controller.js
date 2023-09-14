@@ -116,11 +116,12 @@ export const updateprofile = async (req, res) => {
     try {
         const { name, email, number, password, _id } = req.body;
 
-        if(!userId) return res.send("id is required"); 
+        if (!_id) return res.send("_id is required");
         if (!name) return res.send("name is required");
         if (!email) return res.send("email is required");
         if (!number) return res.send("number is required");
         if (!password) return res.send("password is required");
+        // console.log(_id);
 
         const result = await User.findByIdAndUpdate(_id, {
             name, email, number, password
@@ -130,6 +131,17 @@ export const updateprofile = async (req, res) => {
     catch (error) {
         return res.send(error)
     }
+}
 
+export const updatesingleproduct = async (req, res) => {
+    try {
+        const { id } = req.body
+        if (!id) return res.send("id is required")
 
-} 
+        const response = await Product.findById(id);
+        return res.send(response);
+    }
+    catch (error) {
+        return res.send(error)
+    }
+}

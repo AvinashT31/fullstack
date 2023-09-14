@@ -1,17 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../Context/User.context'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Producthandler = () => {
 
   const { state } = useContext(AuthContext)
   console.log(state.user, "state");
 
-  const [user, setuser] = useState({});
+  const [user, setuser] = useState({ name: "", image: "", price: "" });
   console.log(user, "user");
 
   const [getallproduct, setgetallproduct] = useState([]);
   console.log(getallproduct, "getallproduct")
+
+  const route = useNavigate();
 
   useEffect(() => {
     if (state.user) {
@@ -46,10 +49,12 @@ const Producthandler = () => {
             </div>
             <div className='homedivprice'>
               <h1>₹{e.price}</h1>
+              <button onClick={() => route(`/updateproduct/${e._id}`)}>Update Poduct</button>
             </div>
           </div>
         ))}
       </div>
+
     </>
   )
 }

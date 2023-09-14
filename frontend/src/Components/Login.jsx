@@ -11,7 +11,7 @@ const Login = () => {
     console.log(loginData, "loginData");
 
     const route = useNavigate();
-
+ 
     const { state, login, logout } = useContext(AuthContext);
     console.log(state, "state in login");
 

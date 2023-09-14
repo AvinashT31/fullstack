@@ -5,10 +5,10 @@ import { AuthContext } from '../Context/User.context';
 const Homepage = () => {
 
   const [User, setUser] = useState({})
-
-
+  // console.log(User, "User");
+  
   const { state } = useContext(AuthContext);
-
+  // console.log(state, "state");
 
   useEffect(() => {
 

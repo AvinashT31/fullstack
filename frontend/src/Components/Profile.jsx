@@ -2,16 +2,17 @@ import React, { useContext, useEffect, useState } from 'react'
 import '../Styles/Profile.css'
 import { AuthContext } from '../Context/User.context'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
 
-    const { state } = useContext(AuthContext);
-    console.log(state.user, "state");
+    const { state, login } = useContext(AuthContext);
+    console.log(state, "state");
 
     const [updateData, setupdateData] = useState({});
     console.log(updateData, "updateData");
 
-
+    const route = useNavigate();
 
     const handleform = (e) => {
         setupdateData({ ...updateData, [e.target.name]: e.target.value })
@@ -19,11 +20,19 @@ const Profile = () => {
 
     const handlesubmit = async (e) => {
         e.preventDefault();
-        if(updateData.name && updateData.email && updateData.number && updateData.password) {
+        if (updateData.name && updateData.email && updateData.number && updateData.password && updateData._id) {
+            // console.log(updateData._id);
             const res = await axios.post("http://localhost:8000/updated-profile", {
-                updateData
+                // updateData
+                name: updateData.name,
+                email: updateData.email,
+                number: updateData.number,
+                password: updateData.password,
+                _id: updateData._id
             })
-            console.log(res.data, "check")
+            login({ payload: res.data })
+            setupdateData(res.data)
+            // console.log(res.data, "check")
             alert("Data updated successfully");
         }
         else {
@@ -41,6 +50,9 @@ const Profile = () => {
                 setupdateData(result.data.data);
             }
             getData()
+        }
+        else{
+            route('/login')
         }
 
     }, [state])
